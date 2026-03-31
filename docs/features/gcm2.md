@@ -108,6 +108,19 @@ gtag('consent', 'default', {
 
 This ensures no Google tags collect data before the visitor has consented.
 
+!!! warning "Default `denied` is expected — not a bug"
+    When you check GTM's Consent tab, you will always see all signals as `denied` on initial page load — **regardless of whether you use Basic or Advanced Mode**. This is correct and required by GDPR/ePrivacy: no tracking storage is permitted until the visitor explicitly consents.
+
+    The difference between the two modes is what happens *while* signals are `denied`:
+
+    - **Basic Mode** — Tags do **not** fire at all. No data collection occurs until consent is given.
+    - **Advanced Mode** — Tags fire in a **cookieless mode**, sending aggregated signals without storing cookies. Google uses these signals for conversion modelling. Tags switch to full measurement once consent is `granted`.
+
+    In both cases, `denied` is the legally required starting state. If you see `denied` in GTM Preview, your setup is working correctly.
+
+!!! tip "Verify in GTM Preview"
+    Open **GTM Preview** > **Tag Assistant** > **Consent** tab to inspect the default consent state and confirm signals update after the visitor interacts with the banner.
+
 ### Consent update after decision
 
 After the visitor decides, the SDK builds a consent update from the accepted purposes:
