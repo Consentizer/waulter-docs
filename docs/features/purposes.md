@@ -52,9 +52,20 @@ flowchart LR
 
 ### Signal aggregation rule
 
-A GCM signal is set to `granted` if **any** accepted purpose maps to it.
+A GCM signal is set to `granted` if **any** accepted purpose maps to it. This is an OR-based aggregation — a single accepted purpose is enough to flip the corresponding signal.
 
-**Example:** If a visitor accepts only PU046 (Web Analytics), `analytics_storage` becomes `granted` — even though PU050 and PU061 were rejected.
+**Example:** If a visitor accepts only PU046 (Web Analytics), `analytics_storage` becomes `granted` — even though PU050 (A/B Testing) and PU061 (Extended Analytics) were rejected. This means any tag gated behind `analytics_storage` will fire, including those you might associate with the rejected purposes.
+
+!!! warning "Your responsibility: honour the visitor's intent"
+    The signal aggregation is a **technical mechanism** — it tells Google tags whether a storage type is allowed. But the **ethical and legal responsibility** for how you use that signal remains with you.
+
+    If a visitor explicitly rejected A/B testing (PU050) but accepted basic analytics (PU046), `analytics_storage` is `granted`. Technically, you *could* run A/B testing scripts under that signal. But doing so would:
+
+    - **Violate the visitor's expressed choice** — they said no to A/B testing
+    - **Risk non-compliance** with GDPR Article 7 (conditions for consent) — consent must be specific and informed
+    - **Erode user trust** — if visitors discover their explicit rejections are being bypassed
+
+    **Best practice:** Configure your tags to respect the individual purpose level, not just the GCM signal. Use the `Waulter:Decision` event's `purposes` array to check which specific purposes were accepted before firing granular tags. See [Events & Data Layer](events.md) for how to build purpose-level GTM triggers.
 
 ### Complete mapping table
 

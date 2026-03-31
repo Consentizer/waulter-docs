@@ -94,7 +94,7 @@ The dashboard displays notifications when issues are detected:
 
 ### For developers
 
-- Review the [cookie detection diff view](cookie-detection.md#the-master-check--diff-view) after deployments
+- Review the [cookie detection diff view](cookie-detection.md#the-master-check-diff-view) after deployments
 - Ensure new integrations use consent-dependent triggers
 - Verify GCM signals in [GTM Preview mode](../features/gcm2.md#testing-gcm-integration)
 

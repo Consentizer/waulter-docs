@@ -51,7 +51,10 @@ sequenceDiagram
 2. If the visitor has no stored consent, the banner appears.
 3. When the visitor makes a choice, the SDK updates consent signals and pushes a `Waulter:Decision` event to the data layer.
 4. Tags controlled by consent triggers fire (or remain blocked) accordingly.
-5. The consent decision is stored so returning visitors are not prompted again.
+5. The consent decision is stored so returning visitors are not prompted again. The SDK persists consent in a first-party cookie (`vaswaulter`) and `localStorage`, and each interaction is recorded as a [Permission Transaction](../features/permission-tx.md) — a unique, auditable proof-of-consent. See [Waulter Cookies](../features/cookies.md) for full details on what is stored and for how long.
+
+!!! tip "Overriding stored consent with Scenarios"
+    By default, returning visitors with valid stored consent skip the banner entirely. However, you can override this using a [Scenario](../dashboard/scenarios.md) with the **forceStartCB** flag — this forces the banner to appear again under conditions you define (e.g. after a policy update, for a specific URL pattern, or when purposes change). See [Scenarios — forceStartCB](../dashboard/scenarios.md#the-forcestartcb-flag) for details, and [Scenario-Driven Engagement](../good-practices/scenario-engagement.md) for creative business use cases like whitepaper gates, loyalty programs, and post-purchase opt-ins.
 
 ## Next steps
 

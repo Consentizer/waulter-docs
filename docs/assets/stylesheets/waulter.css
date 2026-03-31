@@ -142,8 +142,8 @@
 [data-md-color-scheme="slate"] {
   --md-primary-fg-color:        var(--waulter-primary-light);
   --md-accent-fg-color:         var(--waulter-accent-alt);
-  --md-default-bg-color:        #1a1025;
-  --md-default-fg-color--light: #b8a5c8;
+  --md-default-bg-color:        #2b2333;
+  --md-default-fg-color--light: #c9bdd6;
 }
 [data-md-color-scheme="slate"] .md-header {
   background: linear-gradient(103deg, #0f001e 35.03%, #2a0054 73.62%, #3d0080 95.07%);

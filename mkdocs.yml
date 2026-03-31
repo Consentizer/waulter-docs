@@ -155,6 +155,8 @@ nav:
     - Performance: good-practices/performance.md
     - Styling & Brand Customization: good-practices/styling.md
     - Multilanguage Setup: good-practices/multilanguage.md
+    - Scenario-Driven Engagement: good-practices/scenario-engagement.md
+    - Consent Strategy — Running Permissions: good-practices/consent-strategy.md
 
   - Agency Guide:
     - Overview: agency/index.md
