@@ -50,6 +50,21 @@ flowchart LR
     PU073["PU073 — Remarketing"] --> AP
 ```
 
+### Purposes are per-configuration
+
+Purposes are **specific to each configuration** — every configuration has its own set of enabled purposes. This means two configurations can offer completely different purpose sets to visitors.
+
+!!! tip "Duplicate configurations to save time"
+    Setting up purposes from scratch for every new configuration is tedious. Use the [Duplicate Configuration](../dashboard/copy-config.md) feature to copy an existing configuration — all purpose selections, texts, and mappings are carried over. Then adjust only what's different.
+
+!!! warning "Deleting purposes when cookies are mapped"
+    Once a configuration has **cookies mapped to purposes**, those purposes become mandatory — they cannot be deleted while cookies reference them. If you need to remove a purpose:
+
+    1. First **unmap or delete the cookies** that are assigned to that purpose
+    2. Then delete the purpose from the configuration
+
+    This safeguard prevents orphaned cookies that would fire without proper consent coverage.
+
 ### Signal aggregation rule
 
 A GCM signal is set to `granted` if **any** accepted purpose maps to it. This is an OR-based aggregation — a single accepted purpose is enough to flip the corresponding signal.
