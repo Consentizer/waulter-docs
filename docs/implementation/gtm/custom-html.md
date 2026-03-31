@@ -100,7 +100,7 @@ The polling pattern checks for the SDK every 100 ms and gives up after 8 seconds
   var callWhenReady = function() {
     // Check if SDK is already available
     if (window.WaulterSDK && typeof window.WaulterSDK.appendDocument === 'function') {
-      window.WaulterSDK.appendDocument('waulterCookies', 'YOUR_DOC_ID');
+      window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
       return;
     }
 
@@ -109,7 +109,7 @@ The polling pattern checks for the SDK every 100 ms and gives up after 8 seconds
     var interval = setInterval(function() {
       if (window.WaulterSDK && typeof window.WaulterSDK.appendDocument === 'function') {
         clearInterval(interval);
-        window.WaulterSDK.appendDocument('waulterCookies', 'YOUR_DOC_ID');
+        window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
       } else if (Date.now() >= deadline) {
         clearInterval(interval);
         console.warn('[Waulter] Timeout: SDK not ready after 8 s');
@@ -136,7 +136,7 @@ The polling pattern checks for the SDK every 100 ms and gives up after 8 seconds
 | `DOMContentLoaded` listener | Defers execution if the tag fires very early in `<head>` |
 
 !!! warning "Replace placeholders"
-    - Replace `waulterCookies` with the `id` attribute of the HTML element where the document should render.
+    - Replace `your-element-id` with the `id` attribute of the HTML element where the document should render.
     - Replace `YOUR_DOC_ID` with your actual document ID from the Waulter dashboard.
 
 ### HTML container element
@@ -144,7 +144,7 @@ The polling pattern checks for the SDK every 100 ms and gives up after 8 seconds
 Your page must include a container element for the document:
 
 ```html
-<div id="waulterCookies"></div>
+<div id="your-element-id"></div>
 ```
 
 The `appendDocument` method injects the document content into this element.

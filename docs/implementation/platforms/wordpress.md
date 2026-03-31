@@ -93,20 +93,20 @@ To render a managed Cookie Policy document on a WordPress page:
 3. Add a container element and the [polling pattern](../direct/async-loading.md#the-polling-pattern):
 
 ```html
-<div id="waulterCookies"></div>
+<div id="your-element-id"></div>
 
 <script>
 (function() {
   var callWhenReady = function() {
     if (window.WaulterSDK && typeof window.WaulterSDK.appendDocument === 'function') {
-      window.WaulterSDK.appendDocument('waulterCookies', 'YOUR_DOC_ID');
+      window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
       return;
     }
     var deadline = Date.now() + 8000;
     var interval = setInterval(function() {
       if (window.WaulterSDK && typeof window.WaulterSDK.appendDocument === 'function') {
         clearInterval(interval);
-        window.WaulterSDK.appendDocument('waulterCookies', 'YOUR_DOC_ID');
+        window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
       } else if (Date.now() >= deadline) {
         clearInterval(interval);
       }

@@ -17,6 +17,9 @@ The `appendDocument` method fetches a managed document from Waulter's servers an
 - **Centrally managed** — edit text in the dashboard, changes appear on your site immediately
 - **Styled** — content inherits your site's CSS and is wrapped in a `.waulter-document` container class
 
+!!! info "The element ID is your choice"
+    The first argument to `appendDocument` is the `id` of any HTML element on your page where the document will be rendered. You choose this ID — it can be anything valid (`cookie-policy`, `privacy-doc`, `terms-container`, etc.). Just make sure the `<div>` with that ID exists in the DOM when the function fires.
+
 ## Document IDs
 
 Each managed document has a unique ID (e.g. `YOUR_DOC_ID`). Find it in the Waulter dashboard under your configuration's **Documents** section.
@@ -32,13 +35,13 @@ The simplest approach — suitable when the SDK is loaded in `<head>` and you ar
 
 ```html
 <h1>Cookie Policy</h1>
-<div id="waulterCookies">
+<div id="your-element-id">
   <p>Loading cookie policy...</p>
 </div>
 
 <script>
   if (window.WaulterSDK && window.WaulterSDK.appendDocument) {
-    window.WaulterSDK.appendDocument('waulterCookies', 'YOUR_DOC_ID');
+    window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
   }
 </script>
 ```
@@ -52,7 +55,7 @@ The SDK loads asynchronously, so you cannot guarantee it is ready when your scri
 
 ```html
 <h1>Cookie Policy</h1>
-<div id="waulterCookies">
+<div id="your-element-id">
   <p>Loading cookie policy...</p>
 </div>
 
@@ -60,7 +63,7 @@ The SDK loads asynchronously, so you cannot guarantee it is ready when your scri
 (function() {
   var callWhenReady = function() {
     if (window.WaulterSDK && typeof window.WaulterSDK.appendDocument === 'function') {
-      window.WaulterSDK.appendDocument('waulterCookies', 'YOUR_DOC_ID');
+      window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
       return;
     }
 
@@ -68,7 +71,7 @@ The SDK loads asynchronously, so you cannot guarantee it is ready when your scri
     var interval = setInterval(function() {
       if (window.WaulterSDK && typeof window.WaulterSDK.appendDocument === 'function') {
         clearInterval(interval);
-        window.WaulterSDK.appendDocument('waulterCookies', 'YOUR_DOC_ID');
+        window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
       } else if (Date.now() >= deadline) {
         clearInterval(interval);
         console.warn('[Waulter] Timeout: SDK not ready after 8 s');
@@ -103,7 +106,7 @@ function CookiePolicy() {
     const checkSDK = setInterval(() => {
       if (window.WaulterSDK?.appendDocument) {
         clearInterval(checkSDK);
-        window.WaulterSDK.appendDocument('waulterCookies', 'YOUR_DOC_ID');
+        window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
       }
     }, 100);
 
@@ -118,7 +121,7 @@ function CookiePolicy() {
   return (
     <div>
       <h1>Cookie Policy</h1>
-      <div id="waulterCookies">
+      <div id="your-element-id">
         <p>Loading cookie policy...</p>
       </div>
     </div>
@@ -137,7 +140,7 @@ The first argument to `appendDocument` is the `id` attribute of the HTML element
 
 ```html
 <!-- This element receives the document content -->
-<div id="waulterCookies"></div>
+<div id="your-element-id"></div>
 ```
 
 You can use any block-level element (`div`, `section`, `article`). The element can contain placeholder content (like "Loading...") which will be replaced when the document loads.
@@ -191,7 +194,7 @@ Or configure the URL in your site's routing so the banner suppression parameter 
 
 | Issue | Cause | Solution |
 |-------|-------|----------|
-| Document does not appear | Container element missing from DOM | Add `<div id="waulterCookies"></div>` to the page |
+| Document does not appear | Container element missing from DOM | Add `<div id="your-element-id"></div>` to the page |
 | Document does not appear | SDK not loaded | Use the polling pattern instead of a simple `if` check |
 | "SDK not ready after 8 s" | SDK blocked (ad blocker, CSP, network) | Check browser Network tab for `sdk.js` errors |
 | Document appears then disappears | SPA framework re-renders the component | Ensure `appendDocument` runs after re-render (use `useEffect`) |

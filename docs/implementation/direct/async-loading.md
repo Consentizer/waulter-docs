@@ -29,7 +29,7 @@ The recommended approach is to **poll** for the SDK at a short interval:
   var callWhenReady = function() {
     // Check if SDK is already available
     if (window.WaulterSDK && typeof window.WaulterSDK.appendDocument === 'function') {
-      window.WaulterSDK.appendDocument('waulterCookies', 'YOUR_DOC_ID');
+      window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
       return;
     }
 
@@ -38,7 +38,7 @@ The recommended approach is to **poll** for the SDK at a short interval:
     var interval = setInterval(function() {
       if (window.WaulterSDK && typeof window.WaulterSDK.appendDocument === 'function') {
         clearInterval(interval);
-        window.WaulterSDK.appendDocument('waulterCookies', 'YOUR_DOC_ID');
+        window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
       } else if (Date.now() >= deadline) {
         clearInterval(interval);
         console.warn('[Waulter] Timeout: SDK not ready after 8 s');
@@ -84,7 +84,7 @@ The `appendDocument` method renders a managed legal document (Cookie Policy, Pri
 Your page must include a container element:
 
 ```html
-<div id="waulterCookies"></div>
+<div id="your-element-id"></div>
 ```
 
 The SDK will inject the document content into this element. The container can be placed anywhere in your page body.
@@ -93,14 +93,14 @@ The SDK will inject the document content into this element. The container can be
 
 ```html
 <h1>Cookie Policy</h1>
-<div id="waulterCookies">
+<div id="your-element-id">
   <p>Loading cookie policy...</p>
 </div>
 
 <script>
   // Assumes SDK is loaded (e.g. in <head>)
   if (window.WaulterSDK && window.WaulterSDK.appendDocument) {
-    window.WaulterSDK.appendDocument('waulterCookies', 'YOUR_DOC_ID');
+    window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
   }
 </script>
 ```
@@ -120,7 +120,7 @@ function CookiePolicy() {
     const checkSDK = setInterval(() => {
       if (window.WaulterSDK?.appendDocument) {
         clearInterval(checkSDK);
-        window.WaulterSDK.appendDocument('waulterCookies', 'YOUR_DOC_ID');
+        window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
       }
     }, 100);
 
@@ -135,7 +135,7 @@ function CookiePolicy() {
   return (
     <div>
       <h1>Cookie Policy</h1>
-      <div id="waulterCookies" ref={containerRef}>
+      <div id="your-element-id" ref={containerRef}>
         <p>Loading cookie policy...</p>
       </div>
     </div>
@@ -165,7 +165,7 @@ As an alternative to polling, you can listen for the `Waulter:Loaded` event:
 ```javascript
 window.addEventListener('Waulter:Loaded', function() {
   // SDK is now ready
-  window.WaulterSDK.appendDocument('waulterCookies', 'YOUR_DOC_ID');
+  window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
 });
 ```
 
@@ -176,7 +176,7 @@ window.addEventListener('Waulter:Loaded', function() {
 
 | Issue | Cause | Solution |
 |-------|-------|----------|
-| Document does not appear | Container element missing | Ensure `<div id="waulterCookies"></div>` exists in the DOM |
+| Document does not appear | Container element missing | Ensure `<div id="your-element-id"></div>` exists in the DOM |
 | "SDK not ready after 8 s" | SDK blocked or failed to load | Check browser Network tab for `sdk.js` errors |
 | Document appears briefly then vanishes | SPA re-render clears the container | Move the container outside the SPA's root, or re-call `appendDocument` after navigation |
 | Multiple documents rendered | `appendDocument` called more than once | Use a flag or guard to prevent duplicate calls |

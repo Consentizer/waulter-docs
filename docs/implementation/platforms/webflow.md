@@ -58,7 +58,7 @@ Add a link or button that lets visitors change their consent:
 To render a managed Cookie Policy document:
 
 1. Create a new page in Webflow (e.g. `/cookie-policy`).
-2. Add a **Div Block** with ID `waulterCookies`.
+2. Add a **Div Block** with ID `your-element-id`.
 3. In **Page Settings** > **Custom Code** > **Before `</body>` tag**, paste the [polling pattern](../direct/async-loading.md#the-polling-pattern) with your document ID.
 4. Add `?no_waulter_cb` to the page URL in your cookie policy link to suppress the banner on that page.
 

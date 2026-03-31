@@ -57,7 +57,7 @@ window.WaulterSDK.appendDocument(containerId, documentId)
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `containerId` | string | Yes | The `id` attribute of the HTML element where the document will be injected |
+| `containerId` | string | Yes | The `id` attribute of the wrapper element where the document will be injected. This is a custom ID you define on your page. |
 | `documentId` | string | Yes | The document ID from the Waulter dashboard (e.g. `YOUR_DOC_ID`) |
 
 **Returns:** `void`
@@ -65,11 +65,11 @@ window.WaulterSDK.appendDocument(containerId, documentId)
 **Example:**
 
 ```html
-<div id="waulterCookies"></div>
+<div id="your-element-id"></div>
 
 <script>
   if (window.WaulterSDK) {
-    window.WaulterSDK.appendDocument('waulterCookies', 'YOUR_DOC_ID');
+    window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
   }
 </script>
 ```
