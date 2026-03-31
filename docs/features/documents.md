@@ -201,6 +201,38 @@ The injected document content inherits your site's CSS. Waulter wraps the conten
 }
 ```
 
+## Document types
+
+The `appendDocument` method is not limited to cookie policies. Any document managed in the Waulter dashboard can be rendered on your site:
+
+| Document type | Example use |
+|--------------|-------------|
+| **Cookie Policy** | Required by ePrivacy — explains what cookies your site uses and why |
+| **Privacy Policy** | GDPR-required disclosure of personal data processing |
+| **Terms of Service** | Legal terms governing use of your website or application |
+| **Custom legal content** | Any informational or legal content you manage centrally |
+
+All document types work identically with `appendDocument` — fetch the Document ID from the dashboard and render it into a container element on your page.
+
+## Custom URLs (external document links)
+
+Instead of rendering documents inline via `appendDocument`, you can configure **external URLs** for your policy documents. When set, the consent banner links directly to those URLs rather than rendering inline content.
+
+**How to configure:**
+
+1. Open your configuration in the Waulter dashboard.
+2. Navigate to the **Documents** section.
+3. For each document (Cookie Policy, Privacy Policy), choose between:
+   - **Managed document** — content hosted and rendered by Waulter via `appendDocument`
+   - **External URL** — a link to your own hosted page (e.g. `https://example.com/privacy-policy`)
+4. Save the configuration.
+
+!!! tip "When to use external URLs"
+    Use external URLs when you already have policy pages managed by your legal team or a third-party service, and you don't need Waulter to host the content. The banner will link to your pages instead of rendering inline documents.
+
+!!! info "Mixed approach"
+    You can use a managed document for your Cookie Policy (rendered via `appendDocument`) and an external URL for your Privacy Policy (linking to your own page) — or vice versa. Each document type is configured independently.
+
 ## Suppressing the consent banner on document pages
 
 Cookie policy and privacy policy pages should not show the consent banner (to avoid a circular consent prompt). Add `?no_waulter_cb` to the page URL:

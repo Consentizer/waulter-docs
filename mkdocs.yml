@@ -143,6 +143,9 @@ nav:
     - Permission Transaction ID: features/permission-tx.md
     - Whitelisted Domains: features/whitelisted-domains.md
     - Automated Compliance Monitoring: features/compliance-monitoring.md
+    - Login Button: features/login-button.md
+    - Special Messages: features/special-messages.md
+    - Floating Consent Button: features/floating-button.md
     - Native Preference Center: features/preference-center.md
 
   - SDK Reference:

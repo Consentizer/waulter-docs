@@ -85,6 +85,37 @@ This means you can use the banner not just for cookie consent, but as a **contex
 
 **Result:** Data-driven optimisation of your consent messaging, directly measured through Waulter's built-in analytics.
 
+## Use case 6: Dynamic consent incentives
+
+**Scenario:** Offer visitors **tangible value in exchange for consent** — discount codes, downloadable content, or exclusive access. This turns the consent decision from a compliance obligation into a value exchange.
+
+**Examples:**
+
+| Incentive | Banner message | Target |
+|-----------|---------------|--------|
+| **Discount code** | "Accept marketing cookies and get a 10% discount: WELCOME10" | E-commerce visitors |
+| **Whitepaper download** | "Allow analytics and download our free industry whitepaper" | B2B content pages |
+| **Webinar access** | "Join our upcoming webinar — enable notifications to get your invite" | Event landing pages |
+| **Early access** | "Be the first to know about new products — allow personalisation" | Product pages |
+
+**How to implement:**
+
+1. Create a configuration with your incentive message as a [Special Message](../features/special-messages.md)
+2. Set a **Campaign ID** to identify this incentive (e.g. `discount-10pct`, `whitepaper-q2`)
+3. Create a scenario rule targeting the relevant pages (e.g. `url contains /shop` or `customField1 equals "new-visitor"`)
+4. Use `forceStartCB: true` if you want to re-prompt visitors who previously rejected
+
+**Measuring results:**
+
+Track the `special_functions` event in GTM to measure incentive performance:
+
+- **Impression rate** — how often the incentive message is shown (track via `Waulter:Open` with the scenario's configuration)
+- **Conversion rate** — percentage of visitors who consent after seeing the incentive (compare `consent_decision: 'allow'` vs total impressions)
+- **Redemption rate** — if offering a code, track how often it's used in your checkout system
+- **A/B comparison** — use the `mod` operator in scenario rules to split traffic between incentive and standard messages, then compare consent rates
+
+See [Special Messages](../features/special-messages.md) for the full setup and event reference.
+
 ## Key principles
 
 !!! tip "Respect the visitor"
