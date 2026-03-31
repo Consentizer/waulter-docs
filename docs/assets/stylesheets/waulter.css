@@ -1,31 +1,47 @@
 /* ═══════════════════════════════════════════════════════════
    Waulter External Docs — Brand Stylesheet
-   Primary:  #0F4C81  (deep navy blue)
-   Accent:   #00C2B2  (teal / consent-green)
-   ───────────────────────────────────────────────────────────
-   DESIGNER NOTE: Replace the hex values below to match the
-   current Waulter brand guidelines before go-live.
+   Sourced from: control-center-web-app branding
+   Primary:  #5900B0  (deep purple)
+   Accent:   #9747FF  (medium purple)
+   Secondary:#DBFEC5  (mint green)
+   Text:     #4C3D5A  (dark purple-grey)
+   Font:     Poppins
    ═══════════════════════════════════════════════════════════ */
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap');
+
 :root {
-  --waulter-primary:     #0F4C81;
-  --waulter-primary-alt: #0D3D6B;
-  --waulter-accent:      #00C2B2;
-  --waulter-accent-alt:  #009E90;
+  --waulter-primary:     #5900B0;
+  --waulter-primary-alt: #47008D;
+  --waulter-primary-light: #9747FF;
+  --waulter-accent:      #DBFEC5;
+  --waulter-accent-alt:  #9747FF;
+  --waulter-text:        #4C3D5A;
+  --waulter-text-dark:   #260E44;
   --waulter-text-light:  #FFFFFF;
+  --waulter-bg:          #F6F6F7;
+  --waulter-bg-purple:   #FAF4FF;
+  --waulter-positive:    #21BA45;
+  --waulter-negative:    #C10015;
+  --waulter-warning:     #F2C037;
+
+  /* Typography */
+  --md-text-font: "Poppins", sans-serif;
+  --md-code-font: "Fira Code", ui-monospace, SFMono-Regular, monospace;
 }
 
 /* Material custom primary */
 [data-md-color-primary="custom"] {
   --md-primary-fg-color:        var(--waulter-primary);
-  --md-primary-fg-color--light: var(--waulter-primary-alt);
+  --md-primary-fg-color--light: var(--waulter-primary-light);
   --md-primary-fg-color--dark:  var(--waulter-primary-alt);
   --md-primary-bg-color:        var(--waulter-text-light);
 }
 
 /* Material custom accent */
 [data-md-color-accent="custom"] {
-  --md-accent-fg-color: var(--waulter-accent);
+  --md-accent-fg-color: var(--waulter-primary-light);
 }
 
 /* Navigation tabs */
@@ -35,41 +51,110 @@
 
 /* Header */
 .md-header {
-  background-color: var(--waulter-primary);
+  background: linear-gradient(103deg, #1f003d 35.03%, #47008d 73.62%, #5900b0 95.07%);
 }
 
 /* Sidebar active item */
 .md-nav__link--active {
-  color: var(--waulter-accent) !important;
+  color: var(--waulter-primary) !important;
   font-weight: 600;
+}
+
+/* Sidebar link hover */
+.md-nav__link:hover {
+  color: var(--waulter-primary-light);
 }
 
 /* Admonition accent override for "tip" blocks */
 .md-typeset .admonition.tip,
 .md-typeset details.tip {
-  border-color: var(--waulter-accent);
+  border-color: var(--waulter-positive);
 }
 .md-typeset .tip > .admonition-title,
 .md-typeset .tip > summary {
-  background-color: rgba(0, 194, 178, 0.12);
+  background-color: rgba(219, 254, 197, 0.3);
 }
 .md-typeset .tip > .admonition-title::before,
 .md-typeset .tip > summary::before {
-  background-color: var(--waulter-accent);
+  background-color: var(--waulter-positive);
+}
+
+/* Admonition accent override for "note" blocks */
+.md-typeset .admonition.note,
+.md-typeset details.note {
+  border-color: var(--waulter-primary);
+}
+.md-typeset .note > .admonition-title,
+.md-typeset .note > summary {
+  background-color: var(--waulter-bg-purple);
+}
+.md-typeset .note > .admonition-title::before,
+.md-typeset .note > summary::before {
+  background-color: var(--waulter-primary);
 }
 
 /* Inline code */
 .md-typeset code {
-  background-color: rgba(15, 76, 129, 0.08);
+  background-color: var(--waulter-bg-purple);
   color: var(--waulter-primary);
+  border-radius: 4px;
+}
+
+/* Code blocks */
+.md-typeset pre > code {
+  font-family: var(--md-code-font);
+}
+
+/* Content links */
+.md-typeset a {
+  color: var(--waulter-primary);
+}
+.md-typeset a:hover {
+  color: var(--waulter-primary-light);
+}
+
+/* Search highlight */
+.md-search-result mark {
+  background-color: rgba(219, 254, 197, 0.5);
+  color: var(--waulter-text-dark);
+}
+
+/* Footer */
+.md-footer {
+  background-color: var(--waulter-primary-alt);
+}
+
+/* Navigation tabs hover */
+.md-tabs__link:hover {
+  opacity: 0.8;
+}
+
+/* Grid cards (homepage) */
+.md-typeset .grid.cards > ul > li {
+  border-color: #DFC6F6;
+}
+.md-typeset .grid.cards > ul > li:hover {
+  border-color: var(--waulter-primary);
+  box-shadow: 0 4px 12px rgba(89, 0, 176, 0.1);
 }
 
 /* Dark mode overrides */
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color:        var(--waulter-primary);
-  --md-accent-fg-color:         var(--waulter-accent);
+  --md-primary-fg-color:        var(--waulter-primary-light);
+  --md-accent-fg-color:         var(--waulter-accent-alt);
+  --md-default-bg-color:        #1a1025;
+  --md-default-fg-color--light: #b8a5c8;
+}
+[data-md-color-scheme="slate"] .md-header {
+  background: linear-gradient(103deg, #0f001e 35.03%, #2a0054 73.62%, #3d0080 95.07%);
+}
+[data-md-color-scheme="slate"] .md-tabs {
+  background-color: #2a0054;
 }
 [data-md-color-scheme="slate"] .md-typeset code {
-  background-color: rgba(0, 194, 178, 0.10);
-  color: var(--waulter-accent);
+  background-color: rgba(151, 71, 255, 0.12);
+  color: var(--waulter-primary-light);
+}
+[data-md-color-scheme="slate"] .md-footer {
+  background-color: #0f001e;
 }
