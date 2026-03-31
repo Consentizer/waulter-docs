@@ -78,6 +78,87 @@ Custom fields can be populated from any JavaScript source. They are evaluated at
 !!! tip "GTM variable syntax"
     In a Custom HTML tag, GTM variables use double curly braces: `{{Variable Name}}`. GTM replaces these with the variable's value before the tag fires.
 
+## Why purpose-level control matters
+
+Google Consent Mode v2 uses **aggregated signals** — multiple Waulter purposes map to the same GCM signal. This creates a compliance gap if you rely solely on GCM signals for tag firing.
+
+### The problem: signal aggregation
+
+Consider these three purposes that all map to `analytics_storage`:
+
+| Purpose | Code | GCM Signal |
+|---------|------|-----------|
+| Web Analytics | PU046 | `analytics_storage` |
+| A/B Testing | PU050 | `analytics_storage` |
+| Advanced Analytics | PU061 | `analytics_storage` |
+
+If a visitor accepts **only PU046** (Web Analytics) but explicitly rejects PU050 (A/B Testing), the GCM signal `analytics_storage` becomes `granted`. Any tag gated only by `analytics_storage` will now fire — **including your A/B testing tag**, which the visitor explicitly rejected.
+
+!!! danger "Regulatory risk"
+    Firing a tag against a visitor's explicit purpose-level rejection is a **compliance violation** under GDPR. The visitor made a specific choice, and your implementation overrode it because of signal aggregation. This can lead to regulatory fines and loss of trust.
+
+### The solution: purpose-level triggers
+
+Instead of gating tags by GCM signals alone, check the **specific purpose code** in the `Waulter - Purposes` array:
+
+```javascript
+// GTM Custom JavaScript Variable: "Waulter - AB Testing Allowed?"
+function() {
+  var purposes = {{Waulter - Purposes}};
+  if (Array.isArray(purposes)) {
+    return purposes.indexOf("PU050") !== -1;
+  }
+  return false;
+}
+```
+
+Use this variable as a trigger condition for your A/B testing tag. Now it only fires when PU050 is specifically accepted — regardless of what `analytics_storage` says.
+
+!!! tip "Use the scaffold"
+    The [GTM Scaffold](scaffold.md) includes pre-built purpose-level variables for all 50 Waulter purposes, plus category-level triggers with exception pairs. Import it to get this control without writing custom JavaScript.
+
+### When to use which approach
+
+| Approach | Use when |
+|----------|---------|
+| **GCM signals only** | All your tags are Google tags (GA4, Google Ads) that natively respect GCM signals, and you don't need purpose-level granularity |
+| **Category-level triggers** (scaffold) | You want to ensure all purposes in a category are accepted before firing category-related tags |
+| **Purpose-level variables** (scaffold or custom) | You need to control individual tags based on specific purpose acceptance — the strictest compliance approach |
+
+## Triggers and exception control
+
+For maximum compliance control, set up **exception triggers** that block tags when specific purposes are not accepted.
+
+### How exception triggers work
+
+In GTM, every tag can have:
+
+- **Firing triggers** — conditions that cause the tag to fire
+- **Blocking triggers (exceptions)** — conditions that prevent the tag from firing, even if a firing trigger matches
+
+The scaffold provides paired triggers for each category: a **grant trigger** (fires when the category is accepted) and an **exception trigger** (blocks when it's not).
+
+### Example: Block A/B testing without PU050
+
+1. Set your A/B testing tag's firing trigger to `Waulter:Decision` or All Pages.
+2. Add **Waulter - AB Testing Exception** as a blocking trigger.
+3. Result: the tag fires only when the visitor has specifically accepted PU050.
+
+### Example: Block Facebook Pixel without full marketing consent
+
+1. Set the Facebook Pixel's firing trigger to All Pages.
+2. Add **Waulter - [PC008] Marketing Category Exception** as a blocking trigger.
+3. Result: the Pixel only fires when **all** marketing purposes are accepted, not just when `ad_storage` is `granted` from a single marketing purpose.
+
+### Building custom exception triggers
+
+If the scaffold doesn't cover your exact use case:
+
+1. Create a **Custom JavaScript Variable** that checks `{{Waulter - Purposes}}` for the specific purpose codes your tag requires.
+2. Create a **Custom Event Trigger** on `Waulter:Decision` with a condition on your variable.
+3. Create a second trigger with the **inverse** condition as your exception.
+4. Assign the grant trigger as firing, the exception trigger as blocking.
+
 ## The appendDocument polling pattern
 
 The `appendDocument` method renders a legal document (Cookie Policy, Privacy Policy) into a DOM element. Because the SDK loads asynchronously, you need a **polling pattern** to call `appendDocument` safely.

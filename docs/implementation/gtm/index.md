@@ -19,29 +19,36 @@ Google Tag Manager (GTM) is the **recommended deployment method** for most websi
 
 ## Two approaches
 
-There are two ways to deploy Waulter through GTM. Choose the one that fits your needs:
+There are two ways to deploy Waulter through GTM. Choose the one that fits your level of control:
 
-### Community Template (recommended)
+| Approach | Control level | Best for |
+|----------|--------------|----------|
+| **Community Template + Scaffold** | Standard — pre-built triggers, variables, and consent gating | Most implementations, quick setup, teams that prefer visual configuration |
+| **Custom HTML** | Full — you control every tag firing decision | Strict compliance requirements, complex integrations, custom loading strategies |
 
-The **Waulter Community Template** is available in the GTM Template Gallery. It provides a point-and-click interface — no code required.
+!!! tip "Regulated industries"
+    If your business handles sensitive data (healthcare, finance) or operates in a heavily regulated industry, consider the Custom HTML approach for maximum control over which tags fire for which purposes. See [Why purpose-level control matters](custom-html.md#why-purpose-level-control-matters).
 
-Best for:
+### Community Template + Scaffold (recommended)
 
-- Standard consent setups
-- Teams that prefer visual configuration
-- Quick deployments
+The **Waulter Community Template** provides a point-and-click interface for SDK configuration. The **GTM Scaffold** adds pre-built variables and triggers for purpose-level consent control.
+
+- No custom code required
+- 79 variables + 17 triggers + 2 tags, pre-wired
+- Category-level and purpose-level consent gating
+- Quick setup — import and configure
 
 [:octicons-arrow-right-24: Community Template Guide](community-template.md)
+[:octicons-arrow-right-24: GTM Scaffold Guide](scaffold.md)
 
 ### Custom HTML Tag
 
 A **Custom HTML tag** gives you full control over SDK initialisation, loading order, and advanced patterns like `appendDocument`.
 
-Best for:
-
-- Custom timing or loading strategies
+- Custom timing and loading strategies
+- Purpose-level tag firing logic you write yourself
 - Integration with existing consent stacks
-- Advanced use cases (custom fields from dynamic sources, SPA integration)
+- Dynamic configuration from server-side rendering
 
 [:octicons-arrow-right-24: Custom HTML Guide](custom-html.md)
 
@@ -102,14 +109,16 @@ function() {
 
 See [Events & Data Layer](../../features/events.md) for the full list of events and purpose codes.
 
-## Importing a pre-built container
+## Importing the scaffold
 
-Waulter provides a downloadable GTM container configuration with the SDK tag, consent triggers, and purpose-checking variables pre-configured.
+The **Waulter GTM Scaffold** is a downloadable GTM container export (JSON) with 79 variables, 17 triggers, and 2 tags — all pre-wired for Waulter consent control.
 
-1. In GTM, go to **Admin** > **Import Container**
-2. Upload the Waulter GTM JSON (available from the dashboard under **Implementation** > **GTM** tab)
+1. Download `waulter_gtm_scaffold.json` from the [Waulter GTM GitHub repository](https://github.com/Consentizer/Waulter-CMP-Google-Tag-Manager)
+2. In GTM, go to **Admin** > **Import Container**
 3. Choose **Merge** > **Rename conflicting tags, triggers, and variables**
 4. Review and confirm
+
+[:octicons-arrow-right-24: Full scaffold documentation](scaffold.md)
 
 !!! tip "Review before publishing"
     After importing, review all tags, triggers, and variables in GTM Preview mode before publishing. Rename any items to match your naming conventions.

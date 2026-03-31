@@ -112,6 +112,7 @@ nav:
     - Via Google Tag Manager:
       - GTM Overview: implementation/gtm/index.md
       - Community Template: implementation/gtm/community-template.md
+      - GTM Scaffold: implementation/gtm/scaffold.md
       - Custom HTML Tag: implementation/gtm/custom-html.md
     - Direct Integration:
       - Script Tag: implementation/direct/index.md
