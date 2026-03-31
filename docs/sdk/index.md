@@ -51,8 +51,6 @@ window.addEventListener('Waulter:Loaded', function() {
 | [`appendDocument(containerId, docId)`](api-reference.md#appenddocument) | `void` | Render a policy document into a DOM element |
 | [`setCustomFields(fields)`](api-reference.md#setcustomfields) | `void` | Update custom fields at runtime |
 | [`getCategories()`](api-reference.md#getcategories) | `array` | Get the current purpose categories and their consent state |
-| [`getEnableGCM2()`](api-reference.md#getenablegcm2) | `boolean` | Check if Google Consent Mode v2 is enabled |
-| [`getEnableGCM2Advanced()`](api-reference.md#getenablegcm2advanced) | `boolean` | Check if GCM v2 Advanced mode is enabled |
 
 See the [API Reference](api-reference.md) for full method signatures, parameters, and examples.
 

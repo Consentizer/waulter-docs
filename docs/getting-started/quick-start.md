@@ -106,6 +106,6 @@ For a more detailed check:
 |---------|---------------|----------|
 | Banner does not appear | Domain not whitelisted | Add your domain in the Waulter dashboard under **Whitelisted Domains** |
 | Banner does not appear | Invalid Configuration ID | Double-check the ID in the dashboard **Implementation** tab |
-| Banner does not appear | Consent already given | Clear the `vaswaulter` cookie or use an incognito window |
+| Banner does not appear | Consent already given | Clear both the `vaswaulter` cookie (first-party and third-party) **and** localStorage, then reload. Or use an incognito window. |
 | No `Waulter:Decision` event | `useGtm` not set to `true` | Ensure `useGtm: true` is in your WaulterConfig |
 | Material Icons missing | Stylesheet not loaded | Verify the Google Fonts `<link>` tag is included |

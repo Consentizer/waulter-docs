@@ -159,20 +159,6 @@ If you use the [Community Template](../implementation/gtm/community-template.md)
 |-------|---------|
 | GCM Mode | Basic / Advanced |
 
-### Checking the mode programmatically
-
-```javascript
-// Check if GCM v2 is enabled
-if (window.WaulterSDK.getEnableGCM2()) {
-  console.log('GCM v2 is active');
-}
-
-// Check if Advanced Mode is enabled
-if (window.WaulterSDK.getEnableGCM2Advanced()) {
-  console.log('Advanced Mode — cookieless pings enabled');
-}
-```
-
 ## Testing GCM integration
 
 ### Using GTM Preview + Tag Assistant
@@ -207,4 +193,10 @@ if (window.WaulterSDK.getEnableGCM2Advanced()) {
 | Returning visitor | Accept, close, reopen site | Banner not shown, stored consent signals applied on load |
 
 !!! tip "Clear consent for testing"
-    Delete the `vaswaulter` cookie and reload the page to test as a new visitor. In Chrome: Developer Tools > Application > Cookies > select and delete `vaswaulter`.
+    To test as a new visitor, you must delete **all** Waulter storage — not just the cookie. In Chrome Developer Tools (F12) > **Application** tab:
+
+    1. **Cookies** — delete `vaswaulter` from both **first-party** (your domain) and **third-party** cookies
+    2. **Local Storage** — delete any Waulter-related entries (select your domain → find and remove Waulter keys)
+    3. **Reload the page**
+
+    Deleting only the cookie is not enough — the SDK also checks `localStorage` for consent state. If either remains, the banner will not reappear. Always clear both to get a clean test.

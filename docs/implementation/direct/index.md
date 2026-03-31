@@ -177,7 +177,7 @@ Or as a footer button:
 |-------|-------|----------|
 | Banner does not appear | Domain not whitelisted | Add your domain in the Waulter dashboard |
 | Banner does not appear | Invalid Configuration ID | Verify the ID in the dashboard **Implementation** tab |
-| Banner does not appear | Consent already given | Clear the `vaswaulter` cookie or use incognito |
+| Banner does not appear | Consent already given | Clear both the `vaswaulter` cookie (first-party and third-party) **and** localStorage, then reload. Or use incognito. |
 | Banner does not appear | `?no_waulter_cb` in URL | Remove the query parameter |
 | Material Icons missing | CSS not loaded | Add the Google Fonts `<link>` tag |
 | `Waulter:Decision` not firing | `useGtm` is `false` | Set `useGtm: true` in WaulterConfig |
