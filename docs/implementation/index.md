@@ -11,12 +11,12 @@ Waulter can be deployed in several ways. Choose the approach that fits your tech
 
 ## Comparison
 
-| Approach | Best for | Setup time | Flexibility | Code required? |
-|----------|----------|-----------|-------------|---------------|
-| **GTM Community Template** | Most teams | ~5 minutes | High (point-and-click) | No |
-| **GTM Custom HTML** | Advanced GTM users | ~15 minutes | Full | Minimal |
-| **Direct script tag** | Headless CMS, SSR apps, custom stacks | ~15 minutes | Full | Yes |
-| **Platform-specific** | Webflow, WordPress | ~10 minutes | Moderate | Minimal |
+| Approach | Best for | Flexibility | Code required? |
+|----------|----------|-------------|---------------|
+| **GTM Community Template** | Most teams | High (point-and-click) | No |
+| **GTM Custom HTML** | Advanced GTM users | Full | Minimal |
+| **Direct script tag** | Headless CMS, SSR apps, custom stacks | Full | Yes |
+| **Platform-specific** | Webflow, WordPress | Moderate | Minimal |
 
 ## GTM Community Template (recommended)
 
