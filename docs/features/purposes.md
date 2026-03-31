@@ -117,7 +117,12 @@ When the visitor makes a decision, the SDK sends the accepted purpose codes in t
 | Mixed | Only the selected codes (e.g. `["PU046", "PU050"]`) |
 | Reject all | Empty array `[]` |
 
-You can use these purpose codes in GTM triggers to control which tags fire. See [Events & Data Layer — Building GTM triggers](events.md#building-gtm-triggers).
+You can use these purpose codes in GTM triggers to control which tags fire. See [Events & Data Layer — Building GTM triggers](events.md#building-gtm-triggers) for how to set this up manually.
+
+!!! tip "Use the Waulter GTM Scaffold file to get this for free"
+    Instead of building purpose-level triggers and variables by hand, use the **Waulter GTM Scaffold file** — a pre-built GTM container import that includes all standard triggers, variables, and consent logic already wired up. When a new version of the scaffold is released, you simply re-import it to pick up updates.
+
+    See [GTM Community Template](../implementation/gtm/community-template.md) for the template approach, or the [scaffold JSON on GitHub](https://github.com/Consentizer/Waulter-CMP-Google-Tag-Manager) for the full importable container with all purpose-level triggers pre-configured.
 
 ## Purposes in scenarios
 
