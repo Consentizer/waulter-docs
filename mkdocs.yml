@@ -141,6 +141,8 @@ nav:
     - Events & Data Layer: features/events.md
     - Waulter Cookies: features/cookies.md
     - Permission Transaction ID: features/permission-tx.md
+    - Whitelisted Domains: features/whitelisted-domains.md
+    - Automated Compliance Monitoring: features/compliance-monitoring.md
     - Native Preference Center: features/preference-center.md
 
   - SDK Reference:

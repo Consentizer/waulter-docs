@@ -1,109 +1,186 @@
 ---
-title: User Sharing (Cross-Domain Consent)
+title: User Sharing
 description: >
-  How Waulter's User Sharing feature carries a visitor's consent across multiple
-  domains without prompting them again.
+  How to share configurations, scenarios, and cookies with other users
+  in the Waulter B2B dashboard — using local or global sharing.
 ---
 
 # User Sharing
 
-User Sharing allows your visitors to **consent once** and have that decision honoured across your entire domain portfolio — without being shown the consent banner on every site.
+User Sharing lets you control who can access your configurations, scenarios, and cookies in the Waulter dashboard. You can share with individual team members, agency clients, or entire organisations — without giving everyone access to everything.
 
-## How it works
+There are two sharing modes: **local sharing** (share a single configuration) and **global sharing** (share all configurations under a partner).
 
-When User Sharing is enabled, Waulter links consent decisions to a persistent visitor identifier rather than a single domain. This means:
+## Two sharing modes
 
-1. A visitor consents on **Domain A** (e.g. `www.example.com`).
-2. The visitor navigates to **Domain B** (e.g. `shop.example.com`).
-3. Waulter on Domain B detects the existing consent linked to the visitor's identifier.
-4. If the consent is **valid and unexpired**, the banner is suppressed — the visitor's previous choices are applied automatically.
-5. If the consent is **expired or not found**, a new consent collection begins.
+### Local sharing (per-configuration)
+
+Local sharing grants a specific user access to a **single configuration**. Use this when you want fine-grained control over who sees what.
+
+**Use cases:**
+
+- Share your DEV configuration with developers, but keep PROD restricted to ops — see [DEV & Testing Workflow](../good-practices/dev-testing.md)
+- An agency shares a specific client configuration with that client's marketing manager
+- Grant a colleague access to one site without exposing your entire portfolio
+
+**How to share locally:**
+
+1. Open the configuration in the Waulter dashboard.
+2. Navigate to the **Sharing** section.
+3. Enter the target user's **email address**.
+4. Select the **role** (`read` or `admin`).
+5. Click **Share**.
+
+The target user immediately sees the configuration in their dashboard.
+
+!!! info "The target user must be registered"
+    You can only share with users who have an existing Waulter account. If they don't have one yet, they need to register first.
+
+### Global sharing (per-partner)
+
+Global sharing grants a user access to **all configurations under a partner** — including any configurations created in the future. This is a persistent rule, not a one-time action.
+
+**Use cases:**
+
+- An agency shares everything with a client's account manager who needs visibility across all sites
+- A company gives a new team member access to all configurations at once
+- Waulter support staff need access to all configurations for troubleshooting
+
+**How to set up global sharing:**
+
+1. Open the **Partner** section in the dashboard.
+2. Navigate to **Global Sharing**.
+3. Enter the target user's **email address**.
+4. Select the **role** (`read` or `admin`).
+5. Click **Add Global Share**.
+
+!!! warning "Only the partner owner can manage global sharing"
+    Global sharing is managed at the partner level. Only the user who owns the partner entity can add or remove global shares. Having admin access to individual configurations is not sufficient.
+
+### Comparison
+
+| | Local sharing | Global sharing |
+|--|--------------|---------------|
+| **Scope** | One specific configuration | All configurations under a partner |
+| **Future configurations** | Not included — must be shared manually | Automatically included |
+| **Who can manage** | Configuration owner or any user with admin role | Partner owner only |
+| **Removal** | Removes access to that one configuration | Can remove all access, or remove only the global rule while preserving any local shares |
+
+## Roles
+
+| Role | Access level |
+|------|-------------|
+| `read` | View the configuration, cookies, and scenarios — cannot modify anything |
+| `admin` | Full control — edit, delete, manage sharing, re-share with others |
+
+!!! tip "Effective role = highest role"
+    If a user has both local and global access to a configuration, the **higher role wins**. For example, if a user has `read` globally but `admin` locally on one configuration, they get `admin` on that configuration and `read` on everything else.
+
+## What gets shared (cascade)
+
+When you share a configuration — locally or globally — permissions automatically cascade to related entities:
 
 ```mermaid
-sequenceDiagram
-    participant V as Visitor
-    participant A as Domain A (www.example.com)
-    participant B as Domain B (shop.example.com)
-    participant W as Waulter
+flowchart TD
+    A[Share a Configuration] --> B[Partner metadata]
+    A --> C[All cookies under the configuration]
+    A --> D[All tied scenarios]
 
-    V->>A: Visits Domain A
-    A->>W: SDK loads — no existing consent
-    W->>V: Shows consent banner
-    V->>W: Accepts all purposes
-    W->>A: Consent stored
+    D --> E{{"Tied = scenario references this config<br/>as fallback or in a rule"}}
 
-    V->>B: Navigates to Domain B
-    B->>W: SDK loads — checks for existing consent
-    W->>B: Valid consent found
-    Note over V,B: Banner NOT shown — consent from Domain A applies
+    style A fill:#4051b5,color:#fff
+    style B fill:#e8eaf6,color:#333
+    style C fill:#e8eaf6,color:#333
+    style D fill:#e8eaf6,color:#333
 ```
 
-## Setting up User Sharing
+| Entity | What happens |
+|--------|-------------|
+| **Configuration** | The user is added to the configuration's access list |
+| **Partner** | The user receives access to the partner metadata |
+| **Cookies** | All cookies mapped to the configuration are shared |
+| **Tied scenarios** | Scenarios that reference this configuration (as a fallback or in a rule) are shared |
 
-### Prerequisites
+!!! info "Cascade is one level deep"
+    Scenario sharing does not chain further. If a tied scenario references configurations owned by other users, those configurations are **not** shared. This prevents unintended access across ownership boundaries.
 
-- All participating domains must have Waulter deployed with the SDK.
-- All domains must belong to the **same Waulter account** (same partner).
-- Domains must be listed in the configuration's **Whitelisted Domains**.
+### Global sharing cascade
 
-### Configuration
+When you add a global share, the cascade runs across **all active configurations** under the partner:
 
-1. Log in to the Waulter dashboard.
-2. Open your website configuration.
-3. Enable the **User Sharing** option.
-4. Add all participating domains to the **Whitelisted Domains** list.
-5. Deploy the SDK on each domain with the same Configuration ID or Scenario ID.
+1. Every active configuration under the partner receives the user's permission
+2. Each configuration's cookies and tied scenarios are also shared
+3. Any **new configuration** created under this partner in the future is automatically shared with the user
 
-!!! info "Same Configuration ID"
-    For User Sharing to work, all participating domains should use the same Configuration ID (or Scenario IDs that resolve to configurations under the same partner). This ensures consent decisions are recognised across domains.
+## Self-removal
 
-## What gets shared
+A user who has been given shared access can **remove themselves** from a configuration they don't own. This is useful when:
 
-| Shared | Not shared |
-|--------|-----------|
-| Consent decision (`allow`, `mixed`, `reject`) | Banner styling or text (each domain uses its own configuration) |
-| Accepted purpose codes | Custom fields (set per-page) |
-| Consent expiration date | Statistics (each domain tracks separately) |
+- A team member changes roles and no longer needs access
+- A client wants to revoke their own access after a project ends
+- Preparing for a [Transfer of Ownership](../agency/transfer.md)
 
-## Privacy considerations
+Self-removal does not require admin permission — any shared user can remove themselves.
 
-User Sharing is designed with privacy in mind:
+## Removing shared access
 
-- **No cross-site tracking** — the mechanism is strictly for consent portability, not visitor tracking.
-- **GDPR-compliant** — consent decisions are scoped to the visitor's browser session and identifier. No personal data beyond the consent record is shared between domains.
-- **Visitor control** — visitors can always withdraw consent on any domain. Revocation propagates: if a visitor revokes consent on Domain B, that decision is reflected when they return to Domain A.
-- **Transparency** — the consent banner and preference centre display the same consent state across all domains. Visitors see consistent information about their choices.
+### Removing a local share
 
-!!! tip "Privacy policy disclosure"
-    Mention in your Privacy Policy that consent is shared across your domains. List the participating domains so visitors know where their consent applies.
+The configuration owner (or any user with admin role) can remove a user's local access:
 
-## Limitations
+1. Open the configuration's **Sharing** section.
+2. Find the user in the access list.
+3. Click **Remove**.
 
-| Limitation | Details |
-|-----------|---------|
-| **Same Waulter account** | User Sharing only works between domains managed under the same Waulter partner account. It does not work across different accounts or organisations. |
-| **SDK required on all domains** | Every participating domain must have the Waulter SDK deployed. If a domain does not have the SDK, consent cannot be checked or applied there. |
-| **Browser privacy features** | Safari's Intelligent Tracking Prevention (ITP), Firefox's Enhanced Tracking Protection (ETP), and similar browser privacy features may affect the persistence of the consent identifier. Visitors using aggressive privacy settings may be prompted more frequently. |
-| **Incognito / private browsing** | Consent stored in a private browsing session is not available in normal browsing mode (and vice versa). |
-| **Consent expiration** | Shared consent respects the configured duration. If consent expires on one domain, it is expired on all domains. |
+The user immediately loses access to the configuration and its cascaded entities (cookies, tied scenarios).
 
-## User Sharing and statistics
+### Removing a global share
 
-When consent is shared across domains, each domain tracks its own statistics independently:
+When removing a global share, you have two options:
 
-- **Domain A** records the original consent event (the visitor's first decision).
-- **Domain B** records that a returning visitor loaded the page with existing consent.
-- Consent rates in the dashboard reflect per-domain visitor interactions.
+| Option | Behaviour |
+|--------|----------|
+| **Preserve local shares** (default) | Removes the global rule and any globally-sourced access. If the user also has local shares on specific configurations, those are **kept**. |
+| **Remove all access** | Removes the global rule **and** all access to all configurations under this partner — both global and local shares are revoked. |
 
-!!! info "Consent "belongs" to the domain where it was given"
-    The original consent decision is attributed to the domain where the visitor first interacted with the banner. Subsequent domains benefit from the shared consent but do not count it as a new consent event.
+## Audit trail
+
+Every sharing operation creates an immutable event log entry. This provides a complete history of who shared what, with whom, and when.
+
+**Logged events include:**
+
+- Share (local and global)
+- Unshare (local and global)
+- Self-removal
+- Role changes
+
+**Each event records:**
+
+- Who initiated the action
+- The target user
+- The role granted or revoked
+- Which configurations and scenarios were affected
+- Timestamp
+
+!!! tip "GDPR accountability"
+    The audit trail helps demonstrate compliance with GDPR accountability requirements. You can review the sharing history to verify that access to consent data has been properly managed.
+
+## Best practices
+
+| Practice | Why |
+|----------|-----|
+| Use **local sharing** for DEV/PROD separation | Developers get DEV access; only ops team gets PROD — see [DEV & Testing Workflow](../good-practices/dev-testing.md) |
+| Use **global sharing** sparingly | It grants access to everything, including future configurations. Prefer local sharing for targeted access. |
+| Review access lists periodically | Remove users who no longer need access. Shared users can also self-remove. |
+| Use `read` role for view-only access | When someone only needs to review a configuration (e.g. for compliance auditing), grant `read` instead of `admin`. |
 
 ## Troubleshooting
 
-| Issue | Possible cause | Solution |
-|-------|---------------|----------|
-| Banner appears on Domain B despite consenting on Domain A | Domain B not whitelisted | Add Domain B to **Whitelisted Domains** in the dashboard |
-| Banner appears on Domain B | Different Configuration ID | Ensure both domains use the same Configuration ID or partner |
-| Consent not persisting | Browser privacy mode (ITP/ETP) | Inform users; consider a note about cookie settings |
-| Consent not persisting | Incognito browsing | Expected behaviour — incognito sessions are isolated |
-| Consent expired | Duration elapsed | The visitor must consent again; this is normal |
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| User doesn't see the shared configuration | User is not registered | The user must create a Waulter account first |
+| User doesn't see the shared configuration | Email mismatch | Verify the exact email address used for their Waulter account |
+| Cannot add global sharing | Not the partner owner | Only the partner owner can manage global shares |
+| Shared user cannot edit the configuration | Role is `read` | Update their role to `admin` if they need edit access |
+| Removed global share but user still has access | User has a local share too | Remove the local share separately, or use the "Remove all access" option |
+| Tied scenario not shared | Scenario not linked to the configuration | The scenario must reference the configuration as a fallback or in a rule |

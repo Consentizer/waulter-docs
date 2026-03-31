@@ -87,16 +87,19 @@ The consent decision expires after a configurable number of days:
 | Visitor clears cookies but not localStorage | SDK may not recover consent from localStorage alone — banner appears |
 | Visitor uses incognito mode | No persistent cookies — banner appears on every session |
 
-## User Sharing and cookies
+## Consent persistence across subdomains
 
-When [User Sharing](user-sharing.md) is enabled, the consent identifier in `vaswaulter` is linked to the same server-side record across domains:
+When multiple subdomains are configured under the same Waulter account, the consent identifier in `vaswaulter` is linked to the same server-side record. This means a visitor who consents on one subdomain does not see the banner again on another:
 
-1. Visitor consents on `www.example.com` → `vaswaulter` cookie set on `www.example.com`.
-2. Visitor navigates to `shop.example.com` → SDK loads and checks for consent.
-3. The server recognises the visitor and returns the existing consent.
-4. Banner is suppressed on `shop.example.com`.
+1. Visitor consents on `www.example.com` → `vaswaulter` cookie set on `www.example.com`
+2. Visitor navigates to `shop.example.com` → SDK loads and checks for consent
+3. The server recognises the visitor via the consent identifier and returns the existing consent state
+4. Banner is suppressed on `shop.example.com`
 
-Each domain has its own `vaswaulter` cookie (first-party cookies are domain-scoped), but they reference the same server-side consent record.
+Each subdomain has its own `vaswaulter` cookie (first-party cookies are domain-scoped), but they reference the same server-side consent record. This works automatically when all subdomains use configurations under the same Waulter partner account.
+
+!!! info "This is not the same as User Sharing"
+    Subdomain consent persistence is automatic and visitor-facing. [User Sharing](user-sharing.md) is a separate B2B feature that controls which team members and agencies can access configurations in the dashboard. See [User Sharing](user-sharing.md) for details.
 
 ## Privacy and compliance
 
