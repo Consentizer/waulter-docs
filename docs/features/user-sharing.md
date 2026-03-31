@@ -11,6 +11,11 @@ User Sharing lets you control who can access your configurations, scenarios, and
 
 There are two sharing modes: **local sharing** (share a single configuration) and **global sharing** (share all configurations under a partner).
 
+!!! warning "Sharing is per-partner"
+    Both sharing modes operate **within a single partner**. If you manage multiple partners (e.g. multiple client accounts as an agency), you must set up sharing separately for each partner. There is no "share across all partners at once" option in the dashboard.
+
+    **Managing many partners?** If you need to set up sharing for a large number of partners in bulk, [contact the Waulter team](https://waulter.eu) — we can assist with batch sharing operations.
+
 ## Two sharing modes
 
 ### Local sharing (per-configuration)
