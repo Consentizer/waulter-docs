@@ -1,0 +1,75 @@
+/* ═══════════════════════════════════════════════════════════
+   Waulter External Docs — Brand Stylesheet
+   Primary:  #0F4C81  (deep navy blue)
+   Accent:   #00C2B2  (teal / consent-green)
+   ───────────────────────────────────────────────────────────
+   DESIGNER NOTE: Replace the hex values below to match the
+   current Waulter brand guidelines before go-live.
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  --waulter-primary:     #0F4C81;
+  --waulter-primary-alt: #0D3D6B;
+  --waulter-accent:      #00C2B2;
+  --waulter-accent-alt:  #009E90;
+  --waulter-text-light:  #FFFFFF;
+}
+
+/* Material custom primary */
+[data-md-color-primary="custom"] {
+  --md-primary-fg-color:        var(--waulter-primary);
+  --md-primary-fg-color--light: var(--waulter-primary-alt);
+  --md-primary-fg-color--dark:  var(--waulter-primary-alt);
+  --md-primary-bg-color:        var(--waulter-text-light);
+}
+
+/* Material custom accent */
+[data-md-color-accent="custom"] {
+  --md-accent-fg-color: var(--waulter-accent);
+}
+
+/* Navigation tabs */
+.md-tabs {
+  background-color: var(--waulter-primary);
+}
+
+/* Header */
+.md-header {
+  background-color: var(--waulter-primary);
+}
+
+/* Sidebar active item */
+.md-nav__link--active {
+  color: var(--waulter-accent) !important;
+  font-weight: 600;
+}
+
+/* Admonition accent override for "tip" blocks */
+.md-typeset .admonition.tip,
+.md-typeset details.tip {
+  border-color: var(--waulter-accent);
+}
+.md-typeset .tip > .admonition-title,
+.md-typeset .tip > summary {
+  background-color: rgba(0, 194, 178, 0.12);
+}
+.md-typeset .tip > .admonition-title::before,
+.md-typeset .tip > summary::before {
+  background-color: var(--waulter-accent);
+}
+
+/* Inline code */
+.md-typeset code {
+  background-color: rgba(15, 76, 129, 0.08);
+  color: var(--waulter-primary);
+}
+
+/* Dark mode overrides */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:        var(--waulter-primary);
+  --md-accent-fg-color:         var(--waulter-accent);
+}
+[data-md-color-scheme="slate"] .md-typeset code {
+  background-color: rgba(0, 194, 178, 0.10);
+  color: var(--waulter-accent);
+}

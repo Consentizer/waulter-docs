@@ -1,0 +1,15 @@
+# MkDocs build output (never commit — SWA deploys from CI)
+site/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Azure SWA local emulator (if used)
+.swa/

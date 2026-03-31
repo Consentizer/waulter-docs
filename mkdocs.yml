@@ -1,0 +1,190 @@
+# mkdocs.yml — Waulter External Documentation
+# Public site: https://docs.waulter.eu
+# GitHub repo: https://github.com/Consentizer/waulter-docs
+# ──────────────────────────────────────────────────────
+
+site_name: Waulter Docs
+site_description: >
+  Official end-user and developer documentation for Waulter —
+  the Consent Management Platform built for modern web.
+site_url: https://docs.waulter.eu
+site_author: Waulter Team
+copyright: "Copyright &copy; 2024 – 2026 Waulter s.r.o."
+
+repo_url: https://github.com/Consentizer/waulter-docs
+repo_name: Consentizer/waulter-docs
+edit_uri: edit/main/docs/
+
+# ── Theme ───────────────────────────────────────────────
+theme:
+  name: material
+  custom_dir: docs/assets/overrides  # optional overrides
+  logo: assets/images/waulter-logo-white.svg
+  favicon: assets/images/favicon.png
+  language: en
+
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom          # defined in waulter.css
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+
+# ── Extra CSS / JS ──────────────────────────────────────
+extra_css:
+  - assets/stylesheets/waulter.css
+
+# ── Extensions ──────────────────────────────────────────
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - tables
+  - footnotes
+  - def_list
+
+# ── Plugins ─────────────────────────────────────────────
+plugins:
+  - search:
+      lang: en
+  - minify:
+      minify_html: true
+  # Uncomment when mkdocs-git-revision-date-localized-plugin is installed:
+  # - git-revision-date-localized:
+  #     enable_creation_date: true
+
+# ── Navigation ──────────────────────────────────────────
+nav:
+  - Home: index.md
+
+  - Getting Started:
+    - Overview: getting-started/index.md
+    - Quick Start: getting-started/quick-start.md
+    - Key Concepts: getting-started/concepts.md
+
+  - Implementation:
+    - Overview: implementation/index.md
+    - Via Google Tag Manager:
+      - GTM Overview: implementation/gtm/index.md
+      - Community Template: implementation/gtm/community-template.md
+      - Custom HTML Tag: implementation/gtm/custom-html.md
+    - Direct Integration:
+      - Script Tag: implementation/direct/index.md
+      - Async / Deferred Loading: implementation/direct/async-loading.md
+    - Platform Guides:
+      - WordPress: implementation/platforms/wordpress.md
+      - Webflow: implementation/platforms/webflow.md
+
+  - Dashboard:
+    - Overview: dashboard/index.md
+    - Configurations: dashboard/configurations.md
+    - Scenarios: dashboard/scenarios.md
+    - Cookie Detection: dashboard/cookie-detection.md
+    - Compliance Reports: dashboard/compliance.md
+    - Styling & Templates: dashboard/styling.md
+    - Texts & Translations: dashboard/texts.md
+    - Copying Configurations: dashboard/copy-config.md
+    - Statistics & Reporting: dashboard/statistics.md
+
+  - Features:
+    - Feature Overview: features/index.md
+    - Consent Banner: features/consent-banner.md
+    - Purposes: features/purposes.md
+    - Google Consent Mode 2.0: features/gcm2.md
+    - User Sharing: features/user-sharing.md
+    - Policy Documents: features/documents.md
+    - Events & Data Layer: features/events.md
+    - Waulter Cookies: features/cookies.md
+    - Permission Transaction ID: features/permission-tx.md
+
+  - SDK Reference:
+    - SDK Overview: sdk/index.md
+    - API Reference: sdk/api-reference.md
+    - Custom Fields: sdk/custom-fields.md
+    - Callbacks: sdk/callbacks.md
+
+  - Good Practices:
+    - Overview: good-practices/index.md
+    - DEV & Testing Workflow: good-practices/dev-testing.md
+    - Naming Conventions: good-practices/naming-conventions.md
+    - Performance: good-practices/performance.md
+    - Styling & Brand Customization: good-practices/styling.md
+    - Multilanguage Setup: good-practices/multilanguage.md
+
+  - Agency Guide:
+    - Overview: agency/index.md
+    - Template Configs & Batch Updates: agency/templates.md
+    - Account Registration & Sharing: agency/sharing.md
+    - Transfer of Ownership: agency/transfer.md
+
+  - Accessibility:
+    - Overview: accessibility/index.md
+    - WCAG Compliance: accessibility/wcag.md
+
+  - Changelog:
+    - changelog/index.md
+
+# ── Files intentionally excluded from nav ──────────────
+# docs/DEPLOYMENT.md  — Azure SWA + Wedos DNS ops run-book (not a public doc)
+# docs/GUARDRAILS.md  — contributor content rules (not a public doc)
+
+# ── Extra variables ─────────────────────────────────────
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Consentizer/waulter-docs
+      name: Waulter Docs on GitHub
+    - icon: fontawesome/solid/globe
+      link: https://waulter.eu
+      name: Waulter website
+  analytics:
+    provider: google              # TODO: add G- measurement ID
+    property: G-XXXXXXXXXX
+  version:
+    provider: mike               # optional: multi-version docs
