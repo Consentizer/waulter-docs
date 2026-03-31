@@ -81,7 +81,7 @@ Use scenarios when you need:
 2. **First match wins** — the first rule whose conditions are satisfied determines which configuration loads.
 3. If no rule matches, the **fallback configuration** is used.
 
-Available targeting variables include `url`, `referer`, `pageview`, `acceptance`, `purposes`, and `customField1`–`customField10`.
+Available targeting variables include `url`, `referer`, `pageview`, `acceptance`, and `customField1`–`customField10`. Array-level targeting on `purposes` is planned.
 
 See [Scenarios](../dashboard/scenarios.md) for a complete reference of operators and examples.
 

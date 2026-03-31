@@ -58,7 +58,10 @@ Rules evaluate against a context built from the visitor's current session:
 | `referer` | string | HTTP Referer header | `https://google.com/search?q=...` |
 | `pageview` | number | Page views in current session | `3` |
 | `acceptance` | string | Current consent state | `"allow"`, `"mixed"`, `"reject"`, `"empty"` |
-| `purposes` | array | Currently accepted purpose codes | `["PU046", "PU050"]` |
+| `purposes` | array | Currently accepted purpose codes | `["PU046", "PU050"]` | :material-wrench:{ title="Coming soon" } |
+
+!!! warning "Array targeting for `purposes` — coming soon"
+    The `purposes` variable is passed to scenario evaluation as an array, but the current rule engine only supports string operators (`contains`, `not-contains` work as substring match). This means rules like `purposes contains "PU047"` do **not work yet** as expected. Array-aware operators (element membership check) are planned. For now, use the `acceptance` variable (`"allow"`, `"mixed"`, `"reject"`, `"empty"`) to target visitors based on their overall consent state.
 | `customField1`–`customField10` | string | Custom field values from WaulterConfig | `"premium"`, `"campaign-summer"` |
 
 ## Supported operators
