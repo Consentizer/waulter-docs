@@ -20,12 +20,29 @@ The `appendDocument` method fetches a managed document from Waulter's servers an
 !!! info "The element ID is your choice"
     The first argument to `appendDocument` is the `id` of any HTML element on your page where the document will be rendered. You choose this ID — it can be anything valid (`cookie-policy`, `privacy-doc`, `terms-container`, etc.). Just make sure the `<div>` with that ID exists in the DOM when the function fires.
 
-## Document IDs
+## Document IDs and versioning
 
 Each managed document has a unique ID (e.g. `YOUR_DOC_ID`). Find it in the Waulter dashboard under your configuration's **Documents** section.
 
 !!! info "Where to find your Document ID"
     In the Waulter dashboard, navigate to your website configuration > **Documents**. Each document (Cookie Policy, Privacy Policy) shows its unique ID.
+
+### Latest version vs specific version
+
+By default, `appendDocument` loads the **latest published version** of the document — whenever you update the text in the dashboard, visitors automatically see the new version without any code change.
+
+If you need to pin a specific version (e.g. for legal audit trail), pass the version identifier as a third argument:
+
+```javascript
+// Always load the latest version (default)
+window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID');
+
+// Pin to a specific version
+window.WaulterSDK.appendDocument('your-element-id', 'YOUR_DOC_ID', 'v2');
+```
+
+!!! tip "When to pin a version"
+    Most sites should use the default (latest) behaviour. Pin a version only when you need to reference a specific document revision — for example, when a consent receipt must link to the exact policy text the user accepted.
 
 ## Implementation patterns
 
@@ -87,6 +104,13 @@ The SDK loads asynchronously, so you cannot guarantee it is ready when your scri
 })();
 </script>
 ```
+
+The `appendDocument` call takes two required arguments:
+
+| Argument | What to pass | Example |
+|----------|-------------|---------|
+| `elementId` | The `id` of the wrapper `<div>` on your page — you choose this | `'cookie-policy'`, `'privacy-doc'` |
+| `documentId` | The Document ID from the Waulter dashboard | `'YOUR_DOC_ID'` |
 
 This is the same pattern used for [GTM Custom HTML tags](../implementation/gtm/custom-html.md#the-appenddocument-polling-pattern).
 
