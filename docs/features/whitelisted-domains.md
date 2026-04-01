@@ -10,7 +10,7 @@ description: >
 Whitelisted Domains is a **security mechanism** that controls which domains are authorized to render the Waulter consent banner. If a domain is not whitelisted, the banner **will not appear** — the server returns HTTP 403 and nothing happens on the page.
 
 !!! danger "This is a security check, not a statistics filter"
-    A common misconception is that whitelisting only affects statistics. **This is incorrect.** If your domain is not whitelisted, the banner does not render, no consent is collected, no GCM signals are sent, and no events fire. The domain must be whitelisted for Waulter to work at all.
+    If your domain is not whitelisted, the banner **does not render**. No consent is collected, no GCM signals are sent, and no events fire. The domain must be whitelisted for Waulter to work at all.
 
 ## How it works
 
